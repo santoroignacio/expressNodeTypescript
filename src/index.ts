@@ -61,6 +61,7 @@ app.get('*', (req: Request, res: Response)=>{
 
 
 
+
 /* export const conectarMongoose = mongoose.connect(MONGO_URL_COMPASS)
      .then( ()=>{
         console.log(`Se conectó a la base de datos con Mongoose: ${MONGO_URL_COMPASS}`)
