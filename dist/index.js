@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.conectarMongoose = void 0;
 const express_1 = __importDefault(require("express"));
 const hbs_1 = __importDefault(require("hbs"));
-//import productRouter from './routes/productRouter.js'
+const productRouter_1 = __importDefault(require("./routes/productRouter"));
 //import userRouter from './routes/userRouter.js'
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
@@ -48,7 +48,7 @@ app.use(express_1.default.static('/public'));
     }
   })); */
 //rutas
-//app.use('/producto', productRouter )
+app.use('/producto', productRouter_1.default);
 //app.use('/usuario', userRouter )
 app.set('view engine', 'hbs');
 app.set('views', 'src/views');

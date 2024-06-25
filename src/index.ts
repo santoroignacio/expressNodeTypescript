@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express"
 import path from 'node:path'
 import hbs from 'hbs'
-//import productRouter from './routes/productRouter.js'
+import productRouter from './routes/productRouter'
 //import userRouter from './routes/userRouter.js'
 import cors from 'cors'
 import cookieParser from "cookie-parser"
@@ -44,9 +44,8 @@ app.use(express.static('/public'))
   })); */
 
 //rutas
-//app.use('/producto', productRouter )
+app.use('/producto', productRouter )
 //app.use('/usuario', userRouter )
-
 
 app.set('view engine', 'hbs')
 app.set('views','src/views')
@@ -58,9 +57,6 @@ app.get('/', (req: Request, res: Response)=>{
 app.get('*', (req: Request, res: Response)=>{
     res.render('error')
 })
-
-
-
 
 /* export const conectarMongoose = mongoose.connect(MONGO_URL_COMPASS)
      .then( ()=>{
@@ -95,6 +91,7 @@ const MONGO_URL_COMPASS_MONGOOSE: string = process.env.MONGO_URL_COMPASS_MONGOOS
 
     conectarMongoose()
 export default app
+
 
 
 
