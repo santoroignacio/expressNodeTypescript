@@ -16,7 +16,7 @@ exports.conectarMongoose = void 0;
 const express_1 = __importDefault(require("express"));
 const hbs_1 = __importDefault(require("hbs"));
 const productRouter_1 = __importDefault(require("./routes/productRouter"));
-//import userRouter from './routes/userRouter.js'
+const userRouter_js_1 = __importDefault(require("./routes/userRouter.js"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -49,7 +49,7 @@ app.use(express_1.default.static('/public'));
   })); */
 //rutas
 app.use('/producto', productRouter_1.default);
-//app.use('/usuario', userRouter )
+app.use('/usuario', userRouter_js_1.default);
 app.set('view engine', 'hbs');
 app.set('views', 'src/views');
 hbs_1.default.registerPartials('src/views/partials');

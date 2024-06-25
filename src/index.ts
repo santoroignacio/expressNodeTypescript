@@ -2,7 +2,7 @@ import express, { Request, Response } from "express"
 import path from 'node:path'
 import hbs from 'hbs'
 import productRouter from './routes/productRouter'
-//import userRouter from './routes/userRouter.js'
+import userRouter from './routes/userRouter.js'
 import cors from 'cors'
 import cookieParser from "cookie-parser"
 import session from "express-session"
@@ -45,7 +45,7 @@ app.use(express.static('/public'))
 
 //rutas
 app.use('/producto', productRouter )
-//app.use('/usuario', userRouter )
+app.use('/usuario', userRouter )
 
 app.set('view engine', 'hbs')
 app.set('views','src/views')
