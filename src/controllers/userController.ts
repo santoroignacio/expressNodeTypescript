@@ -18,8 +18,6 @@ export const listarUsuarios = async (req = request, res = response) => {
   const cookieToken = req.cookies.xToken
   console.log('cookieToken:', cookieToken)
 
-
-
   try {
     await jwt.verify(cookieToken, process.env.TOKEN_SECRET!)
     try {
@@ -96,7 +94,7 @@ export const actualizarUsuario = async (req = request, res = response) => {
 export const logoutUsuario = async (req = request, res = response) => {
   try {
     res.clearCookie('xToken')
-    //req.session.destroy()
+    req.session.destroy
     res.render('loginUsuario')
   } catch (error) {
     return res.render('error', {
@@ -242,6 +240,6 @@ export const loginUsuario = async (req = request, res = response) => {
 
 }
 
-export const pruebaToken = (req=request, res=response) => {
+export const pruebaToken = (req = request, res = response) => {
   res.render('admin')
 }

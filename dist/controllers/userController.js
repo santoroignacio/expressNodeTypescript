@@ -102,7 +102,7 @@ exports.actualizarUsuario = actualizarUsuario;
 const logoutUsuario = (...args_1) => __awaiter(void 0, [...args_1], void 0, function* (req = express_1.request, res = express_1.response) {
     try {
         res.clearCookie('xToken');
-        //req.session.destroy()
+        req.session.destroy;
         res.render('loginUsuario');
     }
     catch (error) {
