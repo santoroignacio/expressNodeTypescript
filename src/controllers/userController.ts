@@ -3,8 +3,8 @@ import User from '../models/userModels.js'
 import { validationResult } from "express-validator";
 import bcrypt from 'bcrypt';
 import enviarEmail from "../services/mailResponse";
-//import jwt from 'jsonwebtoken';
-//import { generarJWT } from "../services/jwt.js";
+import jwt from 'jsonwebtoken';
+import { generarJWT } from "../services/jwt";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -209,12 +209,12 @@ export const loginUsuario = async (req = request, res = response) => {
     //const token = await generarJWT(user.nombre, user.email);
 
     //asignar el JWT al User con todos los datos datos
-   /*  const token = await generarJWT(user);
+    const token = await generarJWT(user);
 
 
     console.log('Token:', token)
     res.cookie('xToken', token)
- */
+
 
 
     //agregamos la sesion al user con el token

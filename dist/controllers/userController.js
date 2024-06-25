@@ -18,8 +18,7 @@ const userModels_js_1 = __importDefault(require("../models/userModels.js"));
 const express_validator_1 = require("express-validator");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const mailResponse_1 = __importDefault(require("../services/mailResponse"));
-//import jwt from 'jsonwebtoken';
-//import { generarJWT } from "../services/jwt.js";
+const jwt_1 = require("../services/jwt");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const formularioUsuario = (req = express_1.request, res = express_1.response) => {
@@ -193,12 +192,9 @@ const loginUsuario = (...args_1) => __awaiter(void 0, [...args_1], void 0, funct
         //asignar el JWT al User con algunos datos
         //const token = await generarJWT(user.nombre, user.email);
         //asignar el JWT al User con todos los datos datos
-        /*  const token = await generarJWT(user);
-     
-     
-         console.log('Token:', token)
-         res.cookie('xToken', token)
-      */
+        const token = yield (0, jwt_1.generarJWT)(user);
+        console.log('Token:', token);
+        res.cookie('xToken', token);
         //agregamos la sesion al user con el token
         /*  req.session.user = {
            _id: usuarioExiste[0]._id,
