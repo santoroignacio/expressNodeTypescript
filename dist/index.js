@@ -19,6 +19,8 @@ const productRouter_1 = __importDefault(require("./routes/productRouter"));
 const userRouter_js_1 = __importDefault(require("./routes/userRouter.js"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const express_session_1 = __importDefault(require("express-session"));
+const connect_mongo_1 = __importDefault(require("connect-mongo"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -35,18 +37,17 @@ app.use((0, cookie_parser_1.default)());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.static('/public'));
 //session con mongo-connect
-/* app.use(session({
+app.use((0, express_session_1.default)({
     secret: miClave,
     saveUninitialized: false,
     resave: true,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URL_COMPASS_MONGOOSE,
-     
+    store: connect_mongo_1.default.create({
+        mongoUrl: process.env.MONGO_URL_COMPASS_MONGOOSE,
     }),
-    cookie:{
+    cookie: {
         maxAge: 60000
     }
-  })); */
+}));
 //rutas
 app.use('/producto', productRouter_1.default);
 app.use('/usuario', userRouter_js_1.default);

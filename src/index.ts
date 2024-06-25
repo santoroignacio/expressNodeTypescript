@@ -15,7 +15,7 @@ import { cookie } from "express-validator"
 dotenv.config()
 
 const PORT: string | number = process.env.PORT || 1234
-const miClave = process.env.SECRET_SESSION
+const miClave: string | string[] = process.env.SECRET_SESSION!
 
 const app = express()
 //middlewares
@@ -30,7 +30,7 @@ app.use(express.static('/public'))
 
 //session con mongo-connect
 
-/* app.use(session({
+app.use(session({
     secret: miClave,
     saveUninitialized: false, 
     resave: true, 
@@ -41,7 +41,7 @@ app.use(express.static('/public'))
     cookie:{
         maxAge: 60000
     }
-  })); */
+  }));
 
 //rutas
 app.use('/producto', productRouter )

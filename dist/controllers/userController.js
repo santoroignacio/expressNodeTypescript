@@ -18,6 +18,7 @@ const userModels_js_1 = __importDefault(require("../models/userModels.js"));
 const express_validator_1 = require("express-validator");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const mailResponse_1 = __importDefault(require("../services/mailResponse"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const jwt_1 = require("../services/jwt");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
@@ -29,7 +30,7 @@ const listarUsuarios = (...args_1) => __awaiter(void 0, [...args_1], void 0, fun
     const cookieToken = req.cookies.xToken;
     console.log('cookieToken:', cookieToken);
     try {
-        //await jwt.verify(cookieToken, process.env.TOKEN_SECRET)
+        yield jsonwebtoken_1.default.verify(cookieToken, process.env.TOKEN_SECRET);
         try {
             const listaUsuarios = yield userModels_js_1.default.find();
             return res.render('listarTablaUsuarios', {
@@ -196,21 +197,17 @@ const loginUsuario = (...args_1) => __awaiter(void 0, [...args_1], void 0, funct
         console.log('Token:', token);
         res.cookie('xToken', token);
         //agregamos la sesion al user con el token
-        /*  req.session.user = {
-           _id: usuarioExiste[0]._id,
-           nombre: usuarioExiste[0].nombreUsuario,
-           email: usuarioExiste[0].emailUsuario,
-           token
-         }
-     
-         console.log('=======================')
-         console.log(req.session.user)
-         console.log('=======================')
-     
-         await req.session.save()
-     
-         console.log('Usuario autenticado correctamente')
-      */
+        req.session.userSessionData = {
+            _id: usuarioExiste[0]._id,
+            nombre: usuarioExiste[0].nombreUsuario,
+            email: usuarioExiste[0].emailUsuario,
+            token
+        };
+        console.log('=======================');
+        console.log(req.session.userSessionData);
+        console.log('=======================');
+        yield req.session.save();
+        console.log('Usuario autenticado correctamente');
         return res.render('admin');
     }
     catch (error) {

@@ -6,6 +6,7 @@ import enviarEmail from "../services/mailResponse";
 import jwt from 'jsonwebtoken';
 import { generarJWT } from "../services/jwt";
 import dotenv from 'dotenv';
+import { Session } from "express-session";
 dotenv.config();
 
 export const formularioUsuario = (req = request, res = response) => {
@@ -20,7 +21,7 @@ export const listarUsuarios = async (req = request, res = response) => {
 
 
   try {
-    //await jwt.verify(cookieToken, process.env.TOKEN_SECRET)
+    await jwt.verify(cookieToken, process.env.TOKEN_SECRET!)
     try {
       const listaUsuarios = await User.find()
       return res.render('listarTablaUsuarios', {
@@ -218,7 +219,7 @@ export const loginUsuario = async (req = request, res = response) => {
 
 
     //agregamos la sesion al user con el token
-   /*  req.session.user = {
+    req.session.userSessionData = {
       _id: usuarioExiste[0]._id,
       nombre: usuarioExiste[0].nombreUsuario,
       email: usuarioExiste[0].emailUsuario,
@@ -226,13 +227,13 @@ export const loginUsuario = async (req = request, res = response) => {
     }
 
     console.log('=======================')
-    console.log(req.session.user)
+    console.log(req.session.userSessionData)
     console.log('=======================')
 
     await req.session.save()
 
     console.log('Usuario autenticado correctamente')
- */
+
 
     return res.render('admin')
   } catch (error) {
