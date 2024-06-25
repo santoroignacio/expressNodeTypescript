@@ -1,8 +1,8 @@
 import { request, response } from "express";
 import User from '../models/userModels.js'
 import { validationResult } from "express-validator";
-//import bcrypt from 'bcrypt';
-//import enviarEmail from "../services/mailResponse.js";
+import bcrypt from 'bcrypt';
+import enviarEmail from "../services/mailResponse";
 //import jwt from 'jsonwebtoken';
 //import { generarJWT } from "../services/jwt.js";
 import dotenv from 'dotenv';
@@ -16,6 +16,7 @@ export const listarUsuarios = async (req = request, res = response) => {
 
   const cookieToken = req.cookies.xToken
   console.log('cookieToken:', cookieToken)
+
 
 
   try {
@@ -130,16 +131,16 @@ export const registrarUsuario = async (req = request, res = response) => {
   }
 
   //encriptar contraseña
-  /* const salt = await bcrypt.genSalt(10)
+  const salt = await bcrypt.genSalt(10)
   console.log(salt)
   user.passwordUsuario = await bcrypt.hash(req.body.passwordUsuario, salt)
-  console.log(user.passwordUsuario) */
+  console.log(user.passwordUsuario)
 
   //registro el usuario
 
   try {
     const usuario = await User.create(user)
-    //await enviarEmail(req.body.emailUsuario, req.body.nombreUsuario)
+    await enviarEmail(req.body.emailUsuario, req.body.nombreUsuario)
     return res.render('loginUsuario')
     //res.json(usuario)
   } catch (error) {
@@ -186,7 +187,7 @@ export const loginUsuario = async (req = request, res = response) => {
 
 
   try {
-    /* const passwordCorrecto = await bcrypt.compare(passwordUsuario, usuarioExiste[0].passwordUsuario)
+    const passwordCorrecto = await bcrypt.compare(passwordUsuario, usuarioExiste[0].passwordUsuario)
     console.log('password correcto:', passwordCorrecto)
     console.log('usuarioExiste:', usuarioExiste[0]._id)
 
@@ -194,7 +195,7 @@ export const loginUsuario = async (req = request, res = response) => {
       return res.render('loginUsuario', {
         mensaje: 'El usuario o la contraseña son incorrectos'
       })
-    } */
+    }
 
     //generar un user
     const user = {

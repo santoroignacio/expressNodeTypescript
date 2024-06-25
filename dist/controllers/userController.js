@@ -16,8 +16,8 @@ exports.pruebaToken = exports.loginUsuario = exports.formularioLogin = exports.r
 const express_1 = require("express");
 const userModels_js_1 = __importDefault(require("../models/userModels.js"));
 const express_validator_1 = require("express-validator");
-//import bcrypt from 'bcrypt';
-//import enviarEmail from "../services/mailResponse.js";
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const mailResponse_1 = __importDefault(require("../services/mailResponse"));
 //import jwt from 'jsonwebtoken';
 //import { generarJWT } from "../services/jwt.js";
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -132,14 +132,14 @@ const registrarUsuario = (...args_1) => __awaiter(void 0, [...args_1], void 0, f
         return res.json({ mensaje: 'Ese email ya fue registrado anteriormente' });
     }
     //encriptar contraseña
-    /* const salt = await bcrypt.genSalt(10)
-    console.log(salt)
-    user.passwordUsuario = await bcrypt.hash(req.body.passwordUsuario, salt)
-    console.log(user.passwordUsuario) */
+    const salt = yield bcrypt_1.default.genSalt(10);
+    console.log(salt);
+    user.passwordUsuario = yield bcrypt_1.default.hash(req.body.passwordUsuario, salt);
+    console.log(user.passwordUsuario);
     //registro el usuario
     try {
         const usuario = yield userModels_js_1.default.create(user);
-        //await enviarEmail(req.body.emailUsuario, req.body.nombreUsuario)
+        yield (0, mailResponse_1.default)(req.body.emailUsuario, req.body.nombreUsuario);
         return res.render('loginUsuario');
         //res.json(usuario)
     }
@@ -175,15 +175,14 @@ const loginUsuario = (...args_1) => __awaiter(void 0, [...args_1], void 0, funct
     }
     //verificar si la contraseña es la correcta, desencriptar
     try {
-        /* const passwordCorrecto = await bcrypt.compare(passwordUsuario, usuarioExiste[0].passwordUsuario)
-        console.log('password correcto:', passwordCorrecto)
-        console.log('usuarioExiste:', usuarioExiste[0]._id)
-    
+        const passwordCorrecto = yield bcrypt_1.default.compare(passwordUsuario, usuarioExiste[0].passwordUsuario);
+        console.log('password correcto:', passwordCorrecto);
+        console.log('usuarioExiste:', usuarioExiste[0]._id);
         if (!passwordCorrecto) {
-          return res.render('loginUsuario', {
-            mensaje: 'El usuario o la contraseña son incorrectos'
-          })
-        } */
+            return res.render('loginUsuario', {
+                mensaje: 'El usuario o la contraseña son incorrectos'
+            });
+        }
         //generar un user
         const user = {
             _id: usuarioExiste[0]._id,
