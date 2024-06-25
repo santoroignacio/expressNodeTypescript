@@ -58,16 +58,8 @@ app.get('*', (req: Request, res: Response)=>{
     res.render('error')
 })
 
-/* export const conectarMongoose = mongoose.connect(MONGO_URL_COMPASS)
-     .then( ()=>{
-        console.log(`Se conectó a la base de datos con Mongoose: ${MONGO_URL_COMPASS}`)
-     },
-     Error =>{
-        console.log(`No se conectó , error: ${Error}`)
-     }
-    ) */
 
-
+//*******************************Correr Server*************************************************** */
  const server = app.listen(PORT)
 server.on('listening', ()=>{
     console.log(`Servidor escuchando en http://127.0.0.1:${PORT}`)
@@ -76,6 +68,8 @@ server.on('listening', ()=>{
 server.on('error', (error)=>{
     console.log(`Error en el servidor: ${error}`)   
 });
+
+//*********************************Correr BD con Mongoose**************************************** */
 
 const MONGO_URL_COMPASS_MONGOOSE: string = process.env.MONGO_URL_COMPASS_MONGOOSE!
 
